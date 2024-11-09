@@ -6,12 +6,12 @@ const service = new CompanyService();
 const validatorHandler = require('../middlewares/validatorHandler');
 const { createCompanySchema, updateCompanySchema, getCompanySchema } = require('../schemas/companySchemas');
 
-router.get('/api', async (req, res)=>{
+router.get('/', async (req, res)=>{
  const companies = await service.find();
   res.json(companies);
 })
 
-router.get('/api/:id', validatorHandler(getCompanySchema, 'params'), async (req, res, next)=>{
+router.get('/:id', validatorHandler(getCompanySchema, 'params'), async (req, res, next)=>{
   try {
     const { id } = req.params;
      const company = await service.findOne(id);
@@ -21,7 +21,7 @@ router.get('/api/:id', validatorHandler(getCompanySchema, 'params'), async (req,
         }
  })
 
-router.post('/api',validatorHandler(createCompanySchema, 'body'), async(req, res, next)=>{
+router.post('/',validatorHandler(createCompanySchema, 'body'), async(req, res, next)=>{
 try {
   const body = req.body;
    const newCompany = await service.create(body);
@@ -31,7 +31,7 @@ try {
       }
 })
 
-router.patch('/api/:id',validatorHandler(getCompanySchema, 'params'),validatorHandler(updateCompanySchema, 'body'), async(req, res, next)=>{
+router.patch('/:id',validatorHandler(getCompanySchema, 'params'),validatorHandler(updateCompanySchema, 'body'), async(req, res, next)=>{
   try {
    const { id } = req.params;
     const body = req.body;
@@ -42,7 +42,7 @@ router.patch('/api/:id',validatorHandler(getCompanySchema, 'params'),validatorHa
        }
 })
 
-router.delete('/api/:id', async (req, res)=>{
+router.delete('/:id', async (req, res)=>{
  const { id } = req.params;
   rta = await service.delete(id);
    res.json(rta);
